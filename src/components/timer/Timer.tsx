@@ -6,7 +6,7 @@ export const Timer = () => {
 
   return (
     <div className="timer">
-      <h2>Czas: {time}s</h2>
+      <h2>Time: {time}s</h2>
     </div>
   );
 };
