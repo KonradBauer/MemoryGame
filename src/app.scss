@@ -1,0 +1,18 @@
+.global-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: var(--font-primary);
+  background-color: var(--palette-neutral-50);
+  color: var(--palette-neutral-800);
+
+  h1 {
+    text-align: center;
+    color: var(--palette-primary);
+    margin-bottom: 20px;
+    font-family: var(--font-secondary);
+    font-weight: 700;
+    font-size: var(--font-size-3xl);
+    letter-spacing: -0.025em;
+  }
+}
