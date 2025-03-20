@@ -1,53 +1,76 @@
-```
+Oto poprawiony i uatrakcyjniony plik `README.md` dla Twojego projektu:
 
+---
 
-
-Memory Match Game
+# Memory Match Game
 =====================
 
-A memory game where players must find pairs of identical cards. The project is built using frontend technologies and utilizes the Zustand library for state management.
+![example](https://github.com/KonradBauer/MemoryGame/blob/main/public/AnimationMemory.gif?raw=true)
 
-Project Description
-Memory Match Game is a simple yet engaging game suitable for both children and adults. The goal is to find all pairs of cards in the shortest time possible.
+**A Fun Memory Game for All Ages!**
 
-Features:
-Difficulty Levels: The game offers two difficulty levels: easy and hard.
+Memory Match Game is a delightful and engaging game where players must find pairs of identical cards. Built using modern frontend technologies and leveraging the Zustand library for efficient state management, this project is perfect for both children and adults looking to challenge their memory skills.
 
-Game Time: Time is measured from the start to the end of the game.
+## Project Description
+---------------
 
-Statistics: Game statistics, such as time and number of moves, are saved upon completion.
+**Simple Yet Challenging**: Memory Match Game is designed to be easy to learn but challenging to master. The goal is straightforward: find all pairs of cards in the shortest time possible. Whether you're a casual player or a competitive enthusiast, this game is sure to entertain and engage.
 
-Sounds: The game includes sound effects that enhance its appeal.
+## Features
+------------
 
-How to Play
-Start the Game: Open the game page in your browser.
+- **Difficulty Levels**: Choose from two exciting difficulty levels: **Easy** for beginners and **Hard** for those seeking a greater challenge.
+- **Game Time**: Time is of the essence! The game measures your speed from start to finish.
+- **Statistics**: Track your progress with saved game statistics, including time and number of moves.
+- **Immersive Sounds**: Enjoy enhanced gameplay with fun sound effects that bring the game to life.
 
-Choose Difficulty: Select a difficulty level: easy or hard.
+## How to Play
+--------------
 
-Begin the Game: Click on a card to reveal it.
+1. **Start the Game**: Open the game page in your browser and get ready for fun!
+2. **Choose Your Difficulty**: Select either **Easy** or **Hard** to suit your mood.
+3. **Begin the Game**: Click on a card to reveal its symbol.
+4. **Find Pairs**: Search for matching symbols to clear the board.
+5. **Game Completion**: Celebrate your win when all pairs are found!
 
-Find Pairs: Search for pairs of cards with the same symbol.
+## Technologies
+--------------
 
-Game Completion: The game ends when all pairs are found.
+- **Frontend**: Built with **HTML**, **SCSS**, **JavaScript**, and **React** for a seamless user experience.
+- **Zustand**: Utilizes the Zustand library for efficient state management.
+- **Local Storage**: Saves game statistics for future reference.
 
-Technologies
-Frontend: Built using HTML, SCSS, JavaScript + React.
+## Installation
+--------------
 
-Zustand: Library used for state management.
+### Clone the Repository
+```bash
+git clone https://github.com/KonradBauer/MemoryGame.git
+```
 
-Local Storage: Used to store game statistics.
-
-Installation
-Clone the Repository:
-
-bash
-git clone https://gitlab.com/YourRepository/memory-match-game.git
-Install Dependencies:
-
-bash
+### Install Dependencies
+```bash
 npm install
-Run the Game:
+```
 
-bash
+### Run the Game
+```bash
 npm start
-Contribution
+```
+
+## Contribution
+--------------
+
+If you're interested in contributing to this project, feel free to [open an issue](https://github.com/KonradBauer/MemoryGame/issues) or [submit a pull request](https://github.com/KonradBauer/MemoryGame/pulls). Your input is invaluable!
+
+## License
+---------
+
+This project is available under the [MIT License](https://opensource.org/licenses/MIT).
+
+---
+
+Zmień nazwę repozytorium i adres URL na odpowiednie dla Twojego projektu. Ten plik `README.md` pomoże innym zrozumieć Twoją grę i jak z niej korzystać.
+
+---
+Odpowiedź od Perplexity: pplx.ai/share
