@@ -3,6 +3,8 @@
 # Memory Match Game
 =====================
 
+## See [Demo](https://konradbauer.github.io/MemoryGame/)
+
 ![example](https://github.com/KonradBauer/MemoryGame/blob/main/public/AnimationMemory.gif?raw=true)
 
 **A Fun Memory Game for All Ages!**
