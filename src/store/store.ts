@@ -1,13 +1,13 @@
 import { create } from "zustand";
-import { GameState } from "../types/types.ts";
+import { Card, GameState, GameStats } from "../types/types.ts";
 
 export const useGameStore = create<GameState>((set, get) => {
-  let timer: NodeJS.Timeout | null = null;
+  let timer: number | null = null;
 
   const saveGameStats = (difficulty: string) => {
     const { time, turnCount } = get();
 
-    const newGameStats = {
+    const newGameStats: GameStats = {
       date: new Date().toISOString(),
       time,
       turns: turnCount,
@@ -15,12 +15,7 @@ export const useGameStore = create<GameState>((set, get) => {
     };
 
     const existingStatsJSON = localStorage.getItem("gameStats");
-    let gameStats: Array<{
-      date: string;
-      time: number;
-      turns: number;
-      difficulty: string;
-    }> = [];
+    let gameStats: GameStats[] = [];
 
     if (existingStatsJSON) {
       try {
@@ -34,7 +29,7 @@ export const useGameStore = create<GameState>((set, get) => {
     localStorage.setItem("gameStats", JSON.stringify(gameStats));
   };
 
-  const getGameStats = () => {
+  const getGameStats = (): GameStats[] => {
     const statsJSON = localStorage.getItem("gameStats");
     if (statsJSON) {
       try {
@@ -83,9 +78,13 @@ export const useGameStore = create<GameState>((set, get) => {
       set({ time: 0, isTimerRunning: false });
     },
 
-    generateShuffledDeck: (difficulty) => {
+    generateShuffledDeck: (difficulty: "easy" | "hard") => {
       const cardEmojis = ["🚀", "📌", "🖱️", "⌨️", "💾", "֎🇦🇮"];
-      const cardCountByDifficulty = { easy: 3, hard: 6 };
+      const cardCountByDifficulty: Record<"easy" | "hard", number> = {
+        easy: 3,
+        hard: 6,
+      };
+
       const selectedEmojis = cardEmojis.slice(
         0,
         cardCountByDifficulty[difficulty],
@@ -112,7 +111,7 @@ export const useGameStore = create<GameState>((set, get) => {
       get().resetTimer();
     },
 
-    handleSelect: (card) => {
+    handleSelect: (card: Card) => {
       const { selectOne, isProcessing, cards, startTimer } = get();
 
       if (isProcessing || card.matched || card.flipped) return;
@@ -152,7 +151,7 @@ export const useGameStore = create<GameState>((set, get) => {
           if (allMatched) {
             set({ gameCompleted: true });
             stopTimer();
-            // Zapisujemy statystyki gry po zakończeniu
+
             get().saveGameStats(difficulty);
             const win = new Audio("/audio/yay.mp3");
             win.play();

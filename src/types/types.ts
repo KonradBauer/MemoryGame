@@ -26,13 +26,13 @@ export type GameState = {
   gameCompleted: boolean;
   time: number;
   isTimerRunning: boolean;
-  difficulty: number;
+  difficulty: string;
 
   startTimer: () => void;
   stopTimer: () => void;
   resetTimer: () => void;
 
-  generateShuffledDeck: (difficulty: number) => void;
+  generateShuffledDeck: (difficulty: "easy" | "hard") => void;
   handleSelect: (card: Card) => void;
   checkForMatch: () => void;
   resetTurn: () => void;
