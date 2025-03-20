@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import "./style.scss";
 
-type ModalProps {
+type ModalProps = {
   children: React.ReactNode;
-}
+};
 
 export const Modal: React.FC<ModalProps> = ({ children }) => {
   const [isVisible, setIsVisible] = useState(false);
