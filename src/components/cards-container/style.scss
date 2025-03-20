@@ -1,9 +1,13 @@
 .cards-layout {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
   gap: 15px;
+  justify-content: center;
+  margin: 0 auto;
+  padding: 10px;
 
   @media (max-width: 600px) {
-    grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+    gap: 10px;
   }
 }

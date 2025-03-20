@@ -1,116 +1,200 @@
 import { create } from "zustand";
 import { GameState } from "../types/types.ts";
 
-export const useGameStore = create<GameState>((set, get) => ({
-  cards: [],
-  turnCount: 0,
-  selectOne: null,
-  selectTwo: null,
-  isProcessing: false,
-  gameCompleted: false,
+export const useGameStore = create<GameState>((set, get) => {
+  let timer: NodeJS.Timeout | null = null;
 
-  generateShuffledDeck: (difficulty) => {
-    const cardEmojis = ["💻", "🖥️", "🖱️", "⌨️", "💾", "🗃️", "📱", "🔌"];
-    const cardCountByDifficulty = { easy: 3, medium: 4, hard: 6 };
-    const selectedEmojis = cardEmojis.slice(
-      0,
-      cardCountByDifficulty[difficulty],
-    );
+  const saveGameStats = (difficulty: string) => {
+    const { time, turnCount } = get();
 
-    const shuffledDeck = [...selectedEmojis, ...selectedEmojis]
-      .sort(() => Math.random() - 0.5)
-      .map((emoji) => ({
-        emoji,
-        id: Math.random(),
-        matched: false,
-        flipped: false,
-      }));
+    const newGameStats = {
+      date: new Date().toISOString(),
+      time,
+      turns: turnCount,
+      difficulty,
+    };
 
-    set({
-      cards: shuffledDeck,
-      turnCount: 0,
-      selectOne: null,
-      selectTwo: null,
-      gameCompleted: false,
-    });
-  },
+    const existingStatsJSON = localStorage.getItem("gameStats");
+    let gameStats: Array<{
+      date: string;
+      time: number;
+      turns: number;
+      difficulty: string;
+    }> = [];
 
-  handleSelect: (card) => {
-    const { selectOne, isProcessing, cards } = get();
-
-    if (isProcessing || card.matched || card.flipped) return;
-
-    const updatedCards = cards.map((c) =>
-      c.id === card.id ? { ...c, flipped: true } : c,
-    );
-
-    if (!selectOne) {
-      set({ cards: updatedCards, selectOne: card });
-    } else if (selectOne.id !== card.id) {
-      set({
-        cards: updatedCards,
-        selectTwo: card,
-        isProcessing: true,
-      });
+    if (existingStatsJSON) {
+      try {
+        gameStats = JSON.parse(existingStatsJSON);
+      } catch (error) {
+        console.error("Błąd podczas parsowania statystyk gry:", error);
+      }
     }
-  },
 
-  checkForMatch: () => {
-    const { selectOne, selectTwo, cards } = get();
+    gameStats.push(newGameStats);
+    localStorage.setItem("gameStats", JSON.stringify(gameStats));
+  };
 
-    if (selectOne && selectTwo) {
-      if (selectOne.emoji === selectTwo.emoji) {
-        const matchSound = new Audio("/audio/match.mp3");
-        matchSound.play();
-        const updatedCards = cards.map((card) => {
-          if (card.emoji === selectOne.emoji) {
-            return { ...card, matched: true };
-          }
-          return card;
+  const getGameStats = () => {
+    const statsJSON = localStorage.getItem("gameStats");
+    if (statsJSON) {
+      try {
+        return JSON.parse(statsJSON);
+      } catch (error) {
+        console.error("Błąd podczas pobierania statystyk gry:", error);
+        return [];
+      }
+    }
+    return [];
+  };
+
+  return {
+    cards: [],
+    turnCount: 0,
+    selectOne: null,
+    selectTwo: null,
+    isProcessing: false,
+    gameCompleted: false,
+    time: 0,
+    isTimerRunning: false,
+    difficulty: "easy",
+
+    saveGameStats,
+    getGameStats,
+
+    startTimer: () => {
+      if (!get().isTimerRunning) {
+        set({ isTimerRunning: true });
+        timer = setInterval(() => {
+          set((state) => ({ time: state.time + 1 }));
+        }, 1000);
+      }
+    },
+
+    stopTimer: () => {
+      if (timer) {
+        clearInterval(timer);
+        timer = null;
+        set({ isTimerRunning: false });
+      }
+    },
+
+    resetTimer: () => {
+      if (timer) clearInterval(timer);
+      set({ time: 0, isTimerRunning: false });
+    },
+
+    generateShuffledDeck: (difficulty) => {
+      const cardEmojis = ["🚀", "📌", "🖱️", "⌨️", "💾", "֎🇦🇮"];
+      const cardCountByDifficulty = { easy: 3, hard: 6 };
+      const selectedEmojis = cardEmojis.slice(
+        0,
+        cardCountByDifficulty[difficulty],
+      );
+
+      const shuffledDeck = [...selectedEmojis, ...selectedEmojis]
+        .sort(() => Math.random() - 0.5)
+        .map((emoji) => ({
+          emoji,
+          id: Math.random(),
+          matched: false,
+          flipped: false,
+        }));
+
+      set({
+        cards: shuffledDeck,
+        turnCount: 0,
+        selectOne: null,
+        selectTwo: null,
+        gameCompleted: false,
+        difficulty,
+      });
+
+      get().resetTimer();
+    },
+
+    handleSelect: (card) => {
+      const { selectOne, isProcessing, cards, startTimer } = get();
+
+      if (isProcessing || card.matched || card.flipped) return;
+
+      const updatedCards = cards.map((c) =>
+        c.id === card.id ? { ...c, flipped: true } : c,
+      );
+
+      if (!selectOne) {
+        set({ cards: updatedCards, selectOne: card });
+        startTimer();
+      } else if (selectOne.id !== card.id) {
+        set({
+          cards: updatedCards,
+          selectTwo: card,
+          isProcessing: true,
         });
+      }
+    },
 
-        set({ cards: updatedCards });
-        const allMatched = updatedCards.every((card) => card.matched);
-        if (allMatched) {
-          set({ gameCompleted: true });
-          const win = new Audio("/audio/yay.mp3");
-          win.play();
-        }
-      } else {
-        setTimeout(() => {
-          const resetFlippedCards = cards.map((card) => {
-            if (card.id === selectOne.id || card.id === selectTwo.id) {
-              return { ...card, flipped: false };
+    checkForMatch: () => {
+      const { selectOne, selectTwo, cards, stopTimer, difficulty } = get();
+
+      if (selectOne && selectTwo) {
+        if (selectOne.emoji === selectTwo.emoji) {
+          const matchSound = new Audio("/audio/match.mp3");
+          matchSound.play();
+          const updatedCards = cards.map((card) => {
+            if (card.emoji === selectOne.emoji) {
+              return { ...card, matched: true };
             }
             return card;
           });
-          set({ cards: resetFlippedCards });
+
+          set({ cards: updatedCards });
+          const allMatched = updatedCards.every((card) => card.matched);
+          if (allMatched) {
+            set({ gameCompleted: true });
+            stopTimer();
+            // Zapisujemy statystyki gry po zakończeniu
+            get().saveGameStats(difficulty);
+            const win = new Audio("/audio/yay.mp3");
+            win.play();
+          }
+        } else {
+          setTimeout(() => {
+            const resetFlippedCards = cards.map((card) => {
+              if (card.id === selectOne.id || card.id === selectTwo.id) {
+                return { ...card, flipped: false };
+              }
+              return card;
+            });
+            set({ cards: resetFlippedCards });
+          }, 1000);
+        }
+
+        setTimeout(() => {
+          get().resetTurn();
         }, 1000);
       }
+    },
 
-      setTimeout(() => {
-        get().resetTurn();
-      }, 1000);
-    }
-  },
+    resetTurn: () => {
+      set((state) => ({
+        selectOne: null,
+        selectTwo: null,
+        turnCount: state.turnCount + 1,
+        isProcessing: false,
+      }));
+    },
 
-  resetTurn: () => {
-    set((state) => ({
-      selectOne: null,
-      selectTwo: null,
-      turnCount: state.turnCount + 1,
-      isProcessing: false,
-    }));
-  },
+    resetGame: () => {
+      set({
+        cards: [],
+        turnCount: 0,
+        selectOne: null,
+        selectTwo: null,
+        isProcessing: false,
+        gameCompleted: false,
+      });
 
-  resetGame: () => {
-    set({
-      cards: [],
-      turnCount: 0,
-      selectOne: null,
-      selectTwo: null,
-      isProcessing: false,
-      gameCompleted: false,
-    });
-  },
-}));
+      get().resetTimer();
+    },
+  };
+});

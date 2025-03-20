@@ -3,6 +3,9 @@ import Confetti from "react-confetti-boom";
 import { Navigation } from "./components/navigation/Navigation.tsx";
 import { GameInfo } from "./components/game-info/GameInfo.tsx";
 import { CardsContainer } from "./components/cards-container/CardsContainer.tsx";
+import { Timer } from "./components/timer/Timer.tsx";
+import { Stats } from "./components/stats/Stats.tsx";
+import { Modal } from "./components/modal/Modal";
 import { useGameStore } from "./store/store.ts";
 import "./app.scss";
 import "./styles/root.scss";
@@ -21,9 +24,13 @@ function App() {
 
   return (
     <div className="global-container">
+      <Modal>
+        <Stats />
+      </Modal>
       {gameCompleted && <Confetti mode="fall" />}
       <h1>Memory Game</h1>
       <Navigation />
+      <Timer />
       <GameInfo />
       <CardsContainer />
     </div>

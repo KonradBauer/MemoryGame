@@ -1,0 +1,31 @@
+.timer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #ff8a00, #da1b60);
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  width: fit-content;
+  min-width: 120px;
+  text-align: center;
+  transition: all 0.3s ease-in-out;
+  margin: 0 auto;
+
+  h2 {
+    margin: 0;
+    font-size: 1.2rem;
+  }
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  @media (max-width: 600px) {
+    font-size: 1.2rem;
+    padding: 8px 16px;
+  }
+}

@@ -6,6 +6,10 @@
   background-color: var(--palette-neutral-50);
   color: var(--palette-neutral-800);
 
+  @media (max-width: 768px) {
+    padding: 20px 16px
+  }
+
   h1 {
     text-align: center;
     color: var(--palette-primary);

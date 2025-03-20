@@ -11,9 +11,6 @@ export const Navigation = () => {
       <button className="button" onClick={() => generateShuffledDeck("easy")}>
         Easy
       </button>
-      <button className="button" onClick={() => generateShuffledDeck("medium")}>
-        Medium
-      </button>
       <button className="button" onClick={() => generateShuffledDeck("hard")}>
         Hard
       </button>
