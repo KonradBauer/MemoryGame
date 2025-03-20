@@ -1,5 +1,3 @@
-Oto poprawiony i uatrakcyjniony plik `README.md` dla Twojego projektu:
-
 ---
 
 # Memory Match Game
