@@ -18,7 +18,7 @@ export const Modal: React.FC<ModalProps> = ({ children }) => {
     );
 
   return (
-    <div className="modal">
+    <div className="modal" onClick={toggleModal}>
       <div className="modal-content">
         <button className="close-btn" onClick={toggleModal}>
           Close
