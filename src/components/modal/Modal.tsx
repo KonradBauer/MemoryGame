@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./style.scss";
 
 type ModalProps = {
@@ -10,6 +10,22 @@ export const Modal: React.FC<ModalProps> = ({ children }) => {
 
   const toggleModal = () => setIsVisible(!isVisible);
 
+  const handleContentClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+  };
+
+  useEffect(() => {
+    if (isVisible) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isVisible]);
+
   if (!isVisible)
     return (
       <button className="open-btn" onClick={toggleModal}>
@@ -19,7 +35,7 @@ export const Modal: React.FC<ModalProps> = ({ children }) => {
 
   return (
     <div className="modal" onClick={toggleModal}>
-      <div className="modal-content">
+      <div className="modal-content" onClick={handleContentClick}>
         <button className="close-btn" onClick={toggleModal}>
           Close
         </button>

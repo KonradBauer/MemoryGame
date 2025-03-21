@@ -6,6 +6,10 @@
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
 
+  @media (max-width: 768px) {
+    margin: 0;
+  }
+
   .turn-counter {
     font-size: var(--font-size-lg);
     font-weight: 600;

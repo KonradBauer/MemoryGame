@@ -1,13 +1,23 @@
 .cards-layout {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  grid-template-columns: repeat(3, minmax(60px, 80px));
   gap: 15px;
-  justify-content: center;
   margin: 0 auto;
   padding: 10px;
+  justify-content: center;
 
-  @media (max-width: 600px) {
-    grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+  &:after {
+    content: "";
+    grid-column: auto / span 1;
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(3, minmax(70px, 100px));
     gap: 10px;
+  }
+
+  @media (max-width: 480px) {
+    grid-template-columns: repeat(3, minmax(40px, 70px));
+    gap: 8px;
   }
 }
