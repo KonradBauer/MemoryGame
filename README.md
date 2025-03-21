@@ -60,15 +60,3 @@ npm start
 --------------
 
 If you're interested in contributing to this project, feel free to [open an issue](https://github.com/KonradBauer/MemoryGame/issues) or [submit a pull request](https://github.com/KonradBauer/MemoryGame/pulls). Your input is invaluable!
-
-## License
----------
-
-This project is available under the [MIT License](https://opensource.org/licenses/MIT).
-
----
-
-Zmień nazwę repozytorium i adres URL na odpowiednie dla Twojego projektu. Ten plik `README.md` pomoże innym zrozumieć Twoją grę i jak z niej korzystać.
-
----
-Odpowiedź od Perplexity: pplx.ai/share
