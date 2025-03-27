@@ -34,7 +34,7 @@ Memory Match Game is a delightful and engaging game where players must find pair
 ## Technologies
 --------------
 
-- **Frontend**: Built with **HTML**, **SCSS**, **JavaScript**, and **React** for a seamless user experience.
+- **Frontend**: Built with **HTML**, **SCSS**, **TypeScript**, and **React** for a seamless user experience.
 - **Zustand**: Utilizes the Zustand library for efficient state management.
 - **Local Storage**: Saves game statistics for future reference.
 
